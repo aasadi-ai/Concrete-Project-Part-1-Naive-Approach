@@ -3,11 +3,17 @@ import pandas as pd
 from sklearn import metrics
 from sklearn import linear_model
 from sklearn.model_selection import train_test_split,GridSearchCV
+from featureEngineering import *
 
 class BaseModel:
-    def __init__(self):
+    def __init__(self,transform=True):
         np.random.seed(13)
-        self.X,self.y = self.loadData()
+        if transform:
+            _,_,df = self.loadData()
+            df = transformFeatures(df)
+            self.X,self.y,_ = findAndRemoveOutliers(df)
+        else:
+            self.X,self.y,_ = self.loadData()
         self.X_train,self.X_validation,self.X_test,self.y_train,self.y_validation,self.y_test = self.split(self.X,self.y)
         #Standardize Data
         self.standardizationParams = {"mean":None,"std":None}
@@ -25,7 +31,7 @@ class BaseModel:
         #Load Data  and Rename Columns
         df = pd.read_csv("data/concreteData.csv")
         df.columns = ["Cement","Slag","Ash","Water","Plasticizer","CoarseAgg","FineAgg","Age","CompressiveStrength"]
-        return np.array(df.iloc[:,:-1]),np.array(df["CompressiveStrength"])
+        return np.array(df.iloc[:,:-1]),np.array(df["CompressiveStrength"]),df
 
     def standardize(self,X,useParams=True):
         if useParams:
@@ -81,10 +87,8 @@ class BaseModel:
             self.model = gridSearcher.best_estimator_
         return gridSearcher.best_params_,self.score(gridSearcher.best_estimator_.predict(self.X_validation),self.y_validation)
 
-
-
-
-
+    def estimatePerformance(self):
+        return self.score(self.model.predict(self.X_test),self.y_test)
 
 #Check Values and NaNs
 # df.isna().sum()
