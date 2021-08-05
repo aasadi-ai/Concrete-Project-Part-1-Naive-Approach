@@ -1,4 +1,6 @@
 #%%
+import numpy as np
+import pandas as pd
 from Models import models
 
 def getScores():
@@ -13,6 +15,4 @@ def getScores():
             "EstimatedPerformance:": currentModel.estimatePerformance()
         })
     return output
-
-getScores()
-#%%
+# %%
