@@ -32,7 +32,7 @@ class DecisionTree(BaseModel):
         self.model = None
         self.hyperParameterSearchSpace = {
             "max_depth":[i for i in range(1,16)],
-            "min_samples_leaf":[i for i in range(1,10)]
+            "min_samples_leaf":[i for i in range(2,10)]
         } 
 
 class KNN(BaseModel):
@@ -41,4 +41,6 @@ class KNN(BaseModel):
         self.modelType = KNeighborsRegressor
         self.model = None
         self.hyperParameterSearchSpace = {"n_neighbors":[i for i in range(1,11)]}     
+
+models = {"SVM":SVM,"KNN":KNN,"DecisionTree":DecisionTree,"LinearRidge":Linear}
 # %%
