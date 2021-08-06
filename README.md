@@ -29,4 +29,4 @@ Our approach is explained in detail in the ML_Walkthrough file but can be summed
 8. __ML_Walkthrough: An interactive walkthrough of our ML project__
 
 ## __Usage__
-Follow along with __ML_Walkthrough__ or call main.py to runs the models and review their performance.
+Follow along with __ML_Walkthrough__ or call main.py to run the models and review their performance.
