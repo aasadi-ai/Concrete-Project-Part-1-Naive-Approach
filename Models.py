@@ -42,5 +42,23 @@ class KNN(BaseModel):
         self.model = None
         self.hyperParameterSearchSpace = {"n_neighbors":[i for i in range(1,11)]}     
 
+class Ensemble(BaseModel):
+    def __init__(self,modelsToEnsemble,transform=True):
+        super().__init__(transform)
+        self.modelsToEnsemble = modelsToEnsemble
+
+    def predict(self,X):
+        yHat = np.zeros(len(X))
+        for model in self.modelsToEnsemble:
+            yHat+=model.predict(X)
+        yHat / len(self.modelsToEnsemble)
+        return yHat
+
+    def validationMetrics(self):
+        return self.score(self.predict(self.X_validation),self.y_validation)
+
+
 models = {"SVM":SVM,"KNN":KNN,"DecisionTree":DecisionTree,"LinearRidge":Linear}
+
+
 # %%
