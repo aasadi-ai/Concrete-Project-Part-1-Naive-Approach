@@ -10,7 +10,6 @@ class BaseModel:
     def __init__(self,transform=True):
         np.random.seed(13)
         if transform:
-            _,_,df = self.loadData()
             df = selectFeatures()
             self.X,self.y = df.iloc[:,:-1],df["CompressiveStrength"]
         else:
@@ -90,10 +89,4 @@ class BaseModel:
 
     def estimatePerformance(self):
         return self.score(self.model.predict(self.X_test),self.y_test)
-
-#Check Values and NaNs
-# df.isna().sum()
-# df.apply(pd.Series.value_counts).T.stack()
-#calculate z1 score and bin columns with outliers that are 3 or -3 std from mean
-
 # %%
