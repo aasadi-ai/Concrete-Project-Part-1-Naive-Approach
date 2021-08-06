@@ -8,8 +8,8 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.neighbors import KNeighborsRegressor
 
 class SVM(BaseModel):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,transform=True):
+        super().__init__(transform)
         self.modelType = SVR
         self.model = None
         self.hyperParameterSearchSpace = {
@@ -19,15 +19,15 @@ class SVM(BaseModel):
         }
 
 class Linear(BaseModel):
-     def __init__(self):
-        super().__init__()
+     def __init__(self,transform=True):
+        super().__init__(transform)
         self.modelType = Ridge
         self.model = None
         self.hyperParameterSearchSpace = {"alpha":[i/10 for i in range(0,10,1)]}
 
 class DecisionTree(BaseModel):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,transform=True):
+        super().__init__(transform)
         self.modelType = DecisionTreeRegressor
         self.model = None
         self.hyperParameterSearchSpace = {
@@ -36,8 +36,8 @@ class DecisionTree(BaseModel):
         } 
 
 class KNN(BaseModel):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,transform=True):
+        super().__init__(transform)
         self.modelType = KNeighborsRegressor
         self.model = None
         self.hyperParameterSearchSpace = {"n_neighbors":[i for i in range(1,11)]}     

@@ -1,3 +1,4 @@
+from featureSelection import selectFeatures
 import numpy as np
 import pandas as pd
 from sklearn import metrics
@@ -10,8 +11,8 @@ class BaseModel:
         np.random.seed(13)
         if transform:
             _,_,df = self.loadData()
-            df = transformFeatures(df)
-            self.X,self.y,_ = findAndRemoveOutliers(df)
+            df = selectFeatures()
+            self.X,self.y = df.iloc[:,:-1],df["CompressiveStrength"]
         else:
             self.X,self.y,_ = self.loadData()
         self.X_train,self.X_validation,self.X_test,self.y_train,self.y_validation,self.y_test = self.split(self.X,self.y)
